@@ -1,0 +1,8 @@
+
+
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) 
+
+// 用户协议
+AGREMENTURL = http:/$()/95yuguanjia.com/user-agreement.html
+// 隐私协议
+PRIVACYURL = http:/$()/95yuguanjia.com/privacy-agreement.html

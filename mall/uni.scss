@@ -1,0 +1,89 @@
+// 此文件为uView的主题变量，这些变量目前只能通过uni.scss引入才有效，另外由于
+// uni.scss中引入的样式会同时混入到全局样式文件和单独每一个页面的样式中，造成微信程序包太大，
+// 故uni.scss只建议放scss变量名相关样式，其他的样式可以通过main.js或者App.vue引入
+
+// 地址：http://www.uviewui.com/guide/theme.html
+
+/* 行为相关颜色 */
+// 品牌色
+$u-type-primary: #1576ff;
+$u-type-error: #f93a4a;
+$u-type-warning: #ff7929;
+$u-type-success: #19be6b;
+$u-type-info: #909399;
+
+// 品牌色-浅色
+$u-type-primary-light: #a7c5f9;
+$u-type-error-light: #fef0f0;
+$u-type-warning-light: #fdf6ec;
+$u-type-success-light: #dbf1e1;
+$u-type-info-light: #f4f4f5;
+
+// 品牌色-按压
+$u-type-primary-dark: #1e5ccd;
+$u-type-error-dark: #f93a4a;
+$u-type-warning-dark: #ff7929;
+$u-type-success-dark: #18b566;
+$u-type-info-dark: #82848a;
+
+// 品牌色-不可操作
+$u-type-primary-disabled: #a3c0f5;
+$u-type-error-disabled: #fab6b6;
+$u-type-warning-disabled: #fcbd71;
+$u-type-success-disabled: #71d5a1;
+$u-type-info-disabled: #c8c9cc;
+
+/* 文字基本颜色 */
+$u-main-color: #333333; // 主标题 主要文字
+$u-content-color: #7d7d88; // 主要用于正文文字等信息
+$u-tips-color: #999999; // 主要用于副标题、说明性文字 placeholder
+$u-light-color: #cccccc; // 弱文案
+
+$u-border-color: #dddddd; // 边框颜色
+$u-bg-color: #f6f6f6; // 背景色
+$u-form-item-border-color: #eeeeee; // 线条颜色、分割线、输入框边框色
+$u-form-item-height: 70rpx; // cell高度
+
+$uni-bg-color-mask: rgba(0, 0, 0, 0.4); // 弹框遮罩背景颜色
+$uni-color-cell-hover: rgba(
+  0,
+  0,
+  0,
+  0.1
+) !important; // cell点击后的颜色 黑色的 10%
+$uni-color-divider-background: #f5f5f5; // 分割条
+
+@mixin retina-one-px-border($direction: top, $color: $u-border-color) {
+  position: absolute;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+
+  @if $direction == top or $direction == bottom {
+    right: 0;
+    height: 0;
+    transform: scaleY(0.5);
+    border-top: 1px solid $color;
+  }
+  @if $direction == bottom {
+    top: auto;
+    bottom: 0;
+  }
+  @if $direction == right or $direction == left {
+    width: 0;
+    bottom: 0;
+    transform: scaleX(0.5);
+    border-left: 1px solid $color;
+  }
+  @if $direction == right {
+    left: auto;
+    right: 0;
+  }
+  @if $direction == all {
+    width: 200%;
+    height: 200%;
+    transform-origin: left top;
+    transform: scale(0.5);
+    border: 1px solid $color;
+  }
+}

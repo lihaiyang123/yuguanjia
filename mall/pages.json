@@ -1,0 +1,48 @@
+{
+  "pages": [
+    // {
+    //   "path": "pages/home/home",
+    //   "style": {
+    //     // "navigationStyle": "custom",
+    //     "h5": {
+    //       "titleNView": false
+    //     },
+    //     "navigationBarTitleText": ""
+    //   }
+    // },
+    {
+      "path": "pages/mall/mall",
+      "style": {
+        "h5": {
+          "titleNView": false
+        },
+        "navigationBarTitleText": "",
+        "backgroundColor": "#fff"
+      }
+    }
+  ],
+  "condition": {
+    "current": 0,
+    "list": [
+      // {
+      //   "name": "我的",
+      //   "path": "pages/mine/mine",
+      //   "query": ""
+      // }
+    ]
+  },
+  "subpackages": [],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "backgroundColor": "#f8f8f8"
+  },
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "pg-(.*)": "@/components/polygon/pg-$1/pg-$1.vue",
+      "u-(.*)": "@/components/uview-ui/components/u-$1/u-$1.vue"
+    }
+  }
+}

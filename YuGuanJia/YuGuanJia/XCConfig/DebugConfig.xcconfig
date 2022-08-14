@@ -1,0 +1,17 @@
+//
+//  DebugConfig.xcconfig
+//  YJYMainProject
+//
+//  Created by yuhuan on 2020/7/29.
+//  Copyright © 2020 YJY. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "CommonConfig.xcconfig"
+#include "Pods/Target Support Files/Pods-YuGuanJia/Pods-YuGuanJia.debug.xcconfig"
+APP_DISPLAY_NAME = 御管家测试
+
+// 请求地址
+WEBSERVICE_URL = http:/$()/47.96.178.186

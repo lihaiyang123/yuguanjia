@@ -1,0 +1,11 @@
+node_modules
+dist
+hybrid
+/components/mescroll-uni
+/components/uview-ui
+/components/luch-request
+/components/mp-html
+/components/towxml
+/components/uParse
+/wxcomponents
+*/*.min.js

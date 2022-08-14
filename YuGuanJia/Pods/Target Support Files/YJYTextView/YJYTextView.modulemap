@@ -1,0 +1,6 @@
+framework module YJYTextView {
+  umbrella header "YJYTextView-umbrella.h"
+
+  export *
+  module * { export * }
+}

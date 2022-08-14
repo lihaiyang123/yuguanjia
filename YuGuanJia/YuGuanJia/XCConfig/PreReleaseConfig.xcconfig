@@ -1,0 +1,9 @@
+
+// https://help.apple.com/xcode/#/dev745c5c974
+#include "CommonConfig.xcconfig"
+#include "Pods/Target Support Files/Pods-YuGuanJia/Pods-YuGuanJia.prerelease.xcconfig"
+APP_DISPLAY_NAME = 御管家
+
+// 请求地址
+WEBSERVICE_URL = https:/$()/95yuguanjia.com/api
+

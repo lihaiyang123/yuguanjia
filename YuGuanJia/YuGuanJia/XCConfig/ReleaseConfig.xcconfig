@@ -1,0 +1,18 @@
+//
+//  ReleaseConfig.xcconfig
+//  YJYConsultant
+//
+//  Created by yuhuan on 2020/9/11.
+//  Copyright © 2020 YJY. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "CommonConfig.xcconfig"
+#include "Pods/Target Support Files/Pods-YuGuanJia/Pods-YuGuanJia.release.xcconfig"
+APP_DISPLAY_NAME = 御管家
+
+// 请求地址
+WEBSERVICE_URL = https:/$()/95yuguanjia.com/api
+
