@@ -218,6 +218,7 @@
         self.attributeLb.text = attributeStr;
     };
 }
+
 //认证被点击
 - (IBAction)cerAction:(UIButton *)sender {
     NSInteger index = sender.tag - 600;
