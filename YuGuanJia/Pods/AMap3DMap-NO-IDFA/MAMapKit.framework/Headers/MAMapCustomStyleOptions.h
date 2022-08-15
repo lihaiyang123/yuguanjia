@@ -25,6 +25,5 @@
 ///样式额外的配置，比如路况，背景颜色等  since 6.7.0
 @property (nonatomic, strong) NSData *styleExtraData;
 
-
 @end
 

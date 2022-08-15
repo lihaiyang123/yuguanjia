@@ -24,9 +24,6 @@
 ///终点经纬度坐标，无效坐标按照{0，0}处理
 @property (nonatomic, assign) CLLocationCoordinate2D endCoordinate;
 
-///该圆弧的外接MapRect
-@property (nonatomic, readonly) MAMapRect boundingMapRect;
-
 /**
  * @brief 根据起点、途经点和终点生成圆弧
  * @param startCoordinate 起点的经纬度坐标，无效坐标按照{0，0}处理

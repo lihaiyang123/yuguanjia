@@ -61,7 +61,7 @@
 @optional
 /**
  * @brief 动画更新时调用此接口，获取annotationView的旋转角度，不实现默认为0. （since 4.5.0）
- * @return 当前annotation的旋转角度
+ * @return 当前annotation的旋转角度，正北为0度，顺时针方向。即正东90，正南180，正西270。
  */
 - (CLLocationDirection)rotateDegree;
 

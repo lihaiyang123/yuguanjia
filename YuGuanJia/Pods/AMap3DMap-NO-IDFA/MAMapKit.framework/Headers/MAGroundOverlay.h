@@ -21,7 +21,7 @@
 @property (nonatomic, readonly) UIImage *icon;
 
 ///透明度. 最终透明度 = 纹理透明度 * alpha. 有效范围为[0.f, 1.f], 默认为1.f
-@property (nonatomic, assign) CGFloat alpha;
+@property (nonatomic, assign) CGFloat alpha __attribute((deprecated("已废弃，since 7.7.0，请使用MAGroundOverlayRenderer中的alpha")));
 
 ///覆盖图片在地图尺寸等同于其像素的zoom值
 @property (nonatomic, readonly) CGFloat zoomLevel;

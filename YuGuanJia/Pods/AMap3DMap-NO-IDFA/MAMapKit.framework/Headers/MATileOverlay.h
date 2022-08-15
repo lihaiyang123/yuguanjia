@@ -10,9 +10,10 @@
 #if MA_INCLUDE_OVERLAY_TILE
 
 #import "MAOverlay.h"
+#import "MABaseOverlay.h"
 
 ///该类是覆盖在球面墨卡托投影上的图片tiles的数据源
-@interface MATileOverlay : NSObject <MAOverlay>
+@interface MATileOverlay : MABaseOverlay
 
 ///瓦片大小，默认是256x256, 最小支持64*64
 @property (nonatomic, assign) CGSize tileSize;
@@ -28,9 +29,6 @@
 
 ///暂未开放
 @property (nonatomic) BOOL canReplaceMapContent;
-
-///区域外接矩形，可用来设定tileOverlay的可渲染区域
-@property (nonatomic) MAMapRect boundingMapRect;
 
 ///是否停止不在显示区域内的瓦片下载，默认NO. since 5.3.0
 @property (nonatomic, assign) BOOL disableOffScreenTileLoading;
@@ -50,6 +48,8 @@ struct MATileOverlayPath{
     NSInteger y; ///< y坐标
     NSInteger z; ///< 缩放级别
     CGFloat contentScaleFactor; ///< 屏幕的scale factor
+    NSInteger index; ///< 对应的下载url
+    NSInteger requestId; ///<资源下载唯一标识，用于记录
 };
 typedef struct MATileOverlayPath MATileOverlayPath;
 

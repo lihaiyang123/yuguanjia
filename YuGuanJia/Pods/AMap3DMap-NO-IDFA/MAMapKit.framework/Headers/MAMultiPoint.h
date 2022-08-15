@@ -12,12 +12,7 @@
 #import "MAGeometry.h"
 
 ///该类是个由多个点组成的虚基类, 不能直接实例化对象, 要使用其子类MAPolyline,MAPolygon来实例化
-@interface MAMultiPoint : MAShape {
-    @package
-    MAMapPoint *_points;
-    NSUInteger _pointCount;
-    MAMapRect _boundingRect;
-}
+@interface MAMultiPoint : MAShape
 
 ///坐标点数组
 @property (nonatomic, readonly) MAMapPoint *points;

@@ -18,6 +18,7 @@
 #import "MAIndoorInfo.h"
 #import "MAUserLocationRepresentation.h"
 #import "MAMapCustomStyleOptions.h"
+#import <AMapFoundationKit/AMapServices.h>
 
 ///地图类型
 typedef NS_ENUM(NSInteger, MAMapType)
@@ -70,10 +71,16 @@ extern NSString * const kMAMapLayerCameraDegreeKey;
 
 @interface MAMapView : UIView
 
+///标记是否开启metal，默认NO.  注意：因机型或系统限制(要求机型最低5S,系统最低iOS10)，开启metal可能失败。
+@property (nonatomic, assign, class) BOOL metalEnabled;
+
+///是否打开地形图，默认NO.  注意：需在地图创建前设置 （since 8.2.0）
+@property (nonatomic, assign, class) BOOL terrainEnabled;
+
 ///地图view的delegate
 @property (nonatomic, weak) id<MAMapViewDelegate> delegate;
 
-///地图类型
+///地图类型。注意：自定义样式优先级高于mapType，如开启了自定义样式，要关闭自定义样式后mapType才生效
 @property (nonatomic) MAMapType mapType;
 
 ///当前地图的中心点，改变该值时，地图的比例尺级别不会发生变化
@@ -121,9 +128,6 @@ extern NSString * const kMAMapLayerCameraDegreeKey;
 ///是否支持camera旋转, 默认YES
 @property (nonatomic, getter = isRotateCameraEnabled) BOOL rotateCameraEnabled;
 
-///是否支持天空模式，默认为YES. 开启后，进入天空模式后，annotation重用可视范围会缩减
-@property (nonatomic, getter = isSkyModelEnabled) BOOL skyModelEnable __attribute((deprecated("已废弃 since 6.0.0")));
-
 ///是否显示楼块，默认为YES
 @property (nonatomic, getter = isShowsBuildings) BOOL showsBuildings;
 
@@ -134,10 +138,7 @@ extern NSString * const kMAMapLayerCameraDegreeKey;
 @property (nonatomic, getter = isShowTraffic) BOOL showTraffic;
 
 ///设置实时交通颜色,key为 MATrafficStatus
-@property (nonatomic, copy) NSDictionary <NSNumber *, UIColor *> *trafficStatus;
-
-///设置实时交通线宽系数，默认线宽系数为0.8，范围为[0 - 1] (since 5.3.0)
-@property (nonatomic, assign) CGFloat trafficRatio __attribute((deprecated("已废弃 since 6.0.0, 不再支持修改实时交通线宽")));
+@property (nonatomic, copy) NSDictionary <NSNumber *, UIColor *> *trafficStatus __attribute((deprecated("已废弃 since 7.8.0")));
 
 ///是否支持单击地图获取POI信息(默认为YES), 对应的回调是 -(void)mapView:(MAMapView *) didTouchPois:(NSArray *)
 @property (nonatomic, assign) BOOL touchPOIEnabled;
@@ -179,7 +180,10 @@ extern NSString * const kMAMapLayerCameraDegreeKey;
 @property (nonatomic, assign) BOOL isAllowDecreaseFrame;
 
 ///停止/开启 OpenGLES绘制, 默认NO. 对应回调是 - (void)mapView:(MAMapView *) didChangeOpenGLESDisabled:(BOOL)
-@property (nonatomic, assign) BOOL openGLESDisabled;
+@property (nonatomic, assign) BOOL openGLESDisabled __attribute((deprecated("已废弃，since 7.9.0，请使用renderringDisabled属性")));
+
+///停止/开启 地图绘制, 默认NO.
+@property (nonatomic, assign) BOOL renderringDisabled;
 
 ///地图的视图锚点。坐标系归一化，(0, 0)为MAMapView左上角，(1, 1)为右下角。默认为(0.5, 0.5)，即当前地图的视图中心 （since 5.0.0）
 @property (nonatomic, assign) CGPoint screenAnchor;
@@ -236,6 +240,15 @@ extern NSString * const kMAMapLayerCameraDegreeKey;
  * @param animated 是否动画效果
  */
 - (void)setVisibleMapRect:(MAMapRect)mapRect edgePadding:(UIEdgeInsets)insets animated:(BOOL)animated;
+
+/**
+ * @brief 设置可见地图矩形区域
+ * @param insets 边缘插入
+ * @param mapRect 要显示的地图矩形区域
+ * @param animated 是否动画效果
+ * @param duration 动画时长，单位秒
+ */
+- (void)setVisibleMapRect:(MAMapRect)mapRect edgePadding:(UIEdgeInsets)insets animated:(BOOL)animated duration:(CFTimeInterval)duration;
 
 /**
  * @brief 设置当前地图的中心点，改变该值时，地图的比例尺级别不会发生变化
@@ -320,6 +333,14 @@ extern NSString * const kMAMapLayerCameraDegreeKey;
 - (void)takeSnapshotInRect:(CGRect)rect withCompletionBlock:(void (^)(UIImage *resultImage, NSInteger state))block;
 
 /**
+ * @brief 异步在指定区域内截图(默认会包含该区域内的annotationView), 地图载入完整时回调 (since 7.8.0)
+ * @param rect 指定的区域
+ * @param timeout 超时时间
+ * @param block 回调block(resultImage:返回的图片,state：0载入不完整，1完整）
+ */
+- (void)takeSnapshotInRect:(CGRect)rect timeoutInterval:(NSTimeInterval)timeout completionBlock:(void (^)(UIImage *resultImage, NSInteger state))block;
+
+/**
  * @brief 在指定的缩放级别下, 基于地图中心点, 1 screen point 对应的距离(单位是米).
  * @param zoomLevel 指定的缩放级别, 在[minZoomLevel, maxZoomLevel]范围内.
  * @return 对应的距离(单位是米)
@@ -375,7 +396,7 @@ extern NSString * const kMAMapLayerCameraDegreeKey;
  * @brief 重新加载内部纹理，在纹理被错误释放时可以执行此方法。（since 5.4.0）
  */
 - (void)reloadInternalTexture;
-
+ 
 /**
  * @brief 获取地图审图号。如果启用了“自定义样式”功能(customMapStyleEnabled 为 YES)，则返回nil。（since 5.4.0）
  * @return 地图审图号
@@ -387,6 +408,12 @@ extern NSString * const kMAMapLayerCameraDegreeKey;
  * @return 卫星图片审图号
  */
 - (NSString *)satelliteImageApprovalNumber;
+
+/**
+ * @brief 获取地形图审图号。（since 8.2.0）
+ * @return 地形图审图号
+ */
+- (NSString *)terrainApprovalNumber;
 
 /**
  * @brief 添加CAKeyframeAnimation动画。（since 6.0.0）
@@ -411,6 +438,19 @@ extern NSString * const kMAMapLayerCameraDegreeKey;
  */
 - (void)setConstructingRoadEnable:(BOOL)enabled;
 
+#pragma mark - Privacy 隐私合规
+/**
+ * @brief 更新App是否显示隐私弹窗的状态，隐私弹窗是否包含高德SDK隐私协议内容的状态. 注意：必须在MAMapView实例化之前调用 since 8.1.0
+ * @param showStatus 隐私弹窗状态
+ * @param containStatus 包含高德SDK隐私协议状态
+ */
++ (void)updatePrivacyShow:(AMapPrivacyShowStatus)showStatus privacyInfo:(AMapPrivacyInfoStatus)containStatus;
+/**
+* @brief 更新用户授权高德SDK隐私协议状态. 注意：必须在MAMapView实例化之前调用 since 8.1.0
+* @param agreeStatus 用户授权高德SDK隐私协议状态
+*/
++ (void)updatePrivacyAgree:(AMapPrivacyAgreeStatus)agreeStatus;
+
 @end
 
 @interface MAMapView (Annotation)
@@ -423,9 +463,6 @@ extern NSString * const kMAMapLayerCameraDegreeKey;
 
 ///annotation 可见区域
 @property (nonatomic, readonly) CGRect annotationVisibleRect;
-
-///是否允许对annotationView根据zIndex进行排序，默认为NO 注意：如果设置为YES，慎重重载MAAnnoationView的willMoveToSuperview:，内部排序时会调用removeFromSuperView. 注：从5.3.0版本开启此属性废弃，如果添加的annotationView有zIndex不为0的，则自动开启为YES，否则为NO。删除所有annotation后会重置。zIndex属性只有在viewForAnnotation或者didAddAnnotationViews回调中设置有效。
-@property (nonatomic, assign) BOOL allowsAnnotationViewSorting __attribute((deprecated("已废弃 since 5.3.0")));
 
 /**
  * @brief 向地图窗口添加标注，需要实现MAMapViewDelegate的-mapView:viewForAnnotation:函数来生成标注对应的View
@@ -731,24 +768,6 @@ extern NSString * const kMAMapLayerCameraDegreeKey;
 @property (nonatomic, assign) BOOL customMapStyleEnabled;
 
 /**
- * @brief 根据web导出数据设置地图样式, 目前仅支持自定义标准类型. 默认不生效，调用customMapStyleEnabled=YES使生效. since 5.2.0
- * @param data 高德web端工具导出的地图样式数据.
- */
-- (void)setCustomMapStyleWithWebData:(NSData *)data __attribute((deprecated("已废弃, 请使用 setCustomMapStyleOptions: since 6.6.0")));
-
-/**
- * @brief 设置自定义纹理. since 5.7.0
- * @param customTextureResourcePath 自定义纹理文件路径.
- */
-- (void)setCustomTextureResourcePath:(NSString *)customTextureResourcePath __attribute((deprecated("已废弃, 请使用 setCustomMapStyleOptions: since 6.6.0")));
-
-/**
- * @brief 自定义地图样式id, 官网发布后下次开启自定义样式便可生效，目前仅支持自定义标准类型. 默认不生效，调用customMapStyleEnabled=YES使生效. since 6.0.0
- * @param customMapStyleID 自定义样式ID，从官网获取
- */
-- (void)setCustomMapStyleID:(NSString *)customMapStyleID __attribute((deprecated("已废弃, 请使用 setCustomMapStyleOptions: since 6.6.0")));
-
-/**
  * @brief 自定义地图样式设置,可以支持分级样式配置，如控制不同级别显示不同的颜色(自7.0.0开始样式有更新，旧的样式文件不能继续使用，必须到官网重新导出新样式文件。 自6.6.0开始使用新版样式，旧版样式无法在新版接口setCustomMapStyleOptions:(MAMapCustomStyleOptions *)styleOptions中使用，请到官网(lbs.amap.com)更新新版样式文件.)
  * @param styleOptions 自定义样式options.  since 6.6.0
  */
@@ -976,7 +995,7 @@ extern NSString * const kMAMapLayerCameraDegreeKey;
  * @param mapView 地图View
  * @param openGLESDisabled 改变后的openGLESDisabled
  */
-- (void)mapView:(MAMapView *)mapView didChangeOpenGLESDisabled:(BOOL)openGLESDisabled;
+- (void)mapView:(MAMapView *)mapView didChangeOpenGLESDisabled:(BOOL)openGLESDisabled __attribute((deprecated("已废弃，since 7.9.0")));
 
 /**
  * @brief 当touchPOIEnabled == YES时，单击地图使用该回调获取POI信息

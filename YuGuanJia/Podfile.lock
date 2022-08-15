@@ -6,13 +6,13 @@ PODS:
   - AFNetworking/Reachability (3.2.1)
   - AFNetworking/Security (3.2.1)
   - AFNetworking/Serialization (3.2.1)
-  - AMap3DMap-NO-IDFA (7.7.0):
-    - AMapFoundation-NO-IDFA (~> 1.6.3)
-  - AMapFoundation-NO-IDFA (1.6.4)
-  - AMapLocation-NO-IDFA (2.6.7):
-    - AMapFoundation-NO-IDFA (~> 1.6.4)
-  - AMapSearch-NO-IDFA (7.6.0):
-    - AMapFoundation-NO-IDFA (~> 1.6.3)
+  - AMap3DMap-NO-IDFA (9.2.1):
+    - AMapFoundation-NO-IDFA (~> 1.6.9)
+  - AMapFoundation-NO-IDFA (1.6.9)
+  - AMapLocation-NO-IDFA (2.8.0):
+    - AMapFoundation-NO-IDFA (~> 1.6.9)
+  - AMapSearch-NO-IDFA (9.2.0):
+    - AMapFoundation-NO-IDFA (~> 1.6.9)
   - ChameleonFramework (2.1.0):
     - ChameleonFramework/Default (= 2.1.0)
   - ChameleonFramework/Default (2.1.0)
@@ -369,12 +369,13 @@ DEPENDENCIES:
 SPEC REPOS:
   http://gitlab.yuejia100.com.cn/iOS/YJYPods.git:
     - YJYTextView
-  trunk:
-    - AFNetworking
+  https://github.com/CocoaPods/Specs.git:
     - AMap3DMap-NO-IDFA
     - AMapFoundation-NO-IDFA
     - AMapLocation-NO-IDFA
     - AMapSearch-NO-IDFA
+  trunk:
+    - AFNetworking
     - ChameleonFramework
     - Harpy
     - Masonry
@@ -392,10 +393,10 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
-  AMap3DMap-NO-IDFA: a56fa103ce65086b522ad81531630ebc9071783b
-  AMapFoundation-NO-IDFA: 68a24362b110b8e0a3677605d0fd36bdf521f2bb
-  AMapLocation-NO-IDFA: 2a3edfee336b38481b892e1ecc85df0f6b365851
-  AMapSearch-NO-IDFA: 46b0b98a38ce7c5821ac56b1711d4fc3980e719e
+  AMap3DMap-NO-IDFA: 6660036f9a8c28ed3e9037936210121599055a2e
+  AMapFoundation-NO-IDFA: cc2ec7a2828ef292358ad594b7ee0ae21a7f097b
+  AMapLocation-NO-IDFA: 9d7ec9b052405356600b59fe0a9a65261bacc54e
+  AMapSearch-NO-IDFA: 9df378c88d50083346412ee3e0a10e2c451c7139
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Harpy: b2fbe6819f6a8932df32d7cd2fb20f442df86bbc
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
@@ -412,6 +413,6 @@ SPEC CHECKSUMS:
   YJYTextView: cb21f7ca298467f70bc2acc0d66dbfab446f2291
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: ddf4b11aca328631bcd60a6427deb224c8385b50
+PODFILE CHECKSUM: a766ae5ad2eba5e3eb0021b01a44a567717b41b6
 
 COCOAPODS: 1.11.2

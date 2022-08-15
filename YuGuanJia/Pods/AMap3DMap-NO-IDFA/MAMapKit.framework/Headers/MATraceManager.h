@@ -85,17 +85,6 @@ typedef void(^MATraceLocationCallback)(NSArray<CLLocation *> *locations, NSArray
                           failedCallback:(MAFailedCallback)failedCallback;
 
 /**
- * @brief 开始轨迹定位, 内部使用系统CLLocationManager，distanceFilter，desiredAccuracy均为系统默认值
- * @param locCallback 定位回调, 回调中返回坐标类型为AMapCoordinateTypeGPS
- */
-- (void)startTraceWith:(MATraceLocationCallback)locCallback  __attribute__((deprecated("use start instead")));
-
-/**
- * @brief 停止轨迹定位
- */
-- (void)stopTrace  __attribute__((deprecated("use stop instead")));
-
-/**
  * @brief 轨迹定位的代理回调对象，配合start和stop方法使用，since v6.2.0
  */
 @property (nonatomic, weak) id<MATraceDelegate> delegate;

@@ -71,3 +71,7 @@
 #import <MAMapKit/MATraceManager.h>
 #import <MAMapKit/MALineDrawType.h>
 
+#import <MAMapKit/MAHeatMapVectorGridOverlay.h>
+#import <MAMapKit/MAHeatMapVectorGridOverlayRenderer.h>
+#import <MAMapKit/MAMVTTileOverlay.h>
+#import <MAMapKit/MAMVTTileOverlayRenderer.h>

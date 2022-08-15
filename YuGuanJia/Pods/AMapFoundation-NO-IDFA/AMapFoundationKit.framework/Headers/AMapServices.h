@@ -15,6 +15,30 @@
  */
 extern BOOL _amapLocationOverseas;
 
+// 显示隐私弹窗状态  -1: unknow , 0 : 未显示 ， 1 ： 已显示
+typedef NS_ENUM(NSInteger, AMapPrivacyShowStatus)
+{
+    AMapPrivacyShowStatusUnknow = -1,
+    AMapPrivacyShowStatusNotShow = 0,
+    AMapPrivacyShowStatusDidShow = 1,
+};
+
+// 集成SDK隐私信息状态  -1: unknow , 0 : 未集成 ， 1 ： 已集成
+typedef NS_ENUM(NSInteger, AMapPrivacyInfoStatus)
+{
+    AMapPrivacyInfoStatusUnknow = -1,
+    AMapPrivacyInfoStatusNotContain = 0,
+    AMapPrivacyInfoStatusDidContain = 1,
+};
+
+// 用户同意隐私状态 -1: unknow , 0 : 未同意 ， 1 ： 已同意
+typedef NS_ENUM(NSInteger, AMapPrivacyAgreeStatus)
+{
+    AMapPrivacyAgreeStatusUnknow = -1,
+    AMapPrivacyAgreeStatusNotAgree = 0,
+    AMapPrivacyAgreeStatusDidAgree = 1,
+};
+
 ///高德SDK服务类
 @interface AMapServices : NSObject
 

@@ -11,10 +11,7 @@
 #import "MAGeometry.h"
 
 ///该类用于定义一个圆, 通常MACircle是MACircleView的model
-@interface MACircle : MAShape <MAOverlay> {
-    @package
-    MAMapRect _boundingMapRect;
-}
+@interface MACircle : MAShape <MAOverlay>
 
 ///设置中空区域，用来创建中间带空洞的复杂图形。注意：传入的overlay只支持MAPolgon类型和MACircle类型,不支持与此circle边相交或在circle外部,不支持hollowShapes彼此间相交,和空洞顺序有关,不支持嵌套. since 5.5.0
 @property (nonatomic, strong) NSArray<id<MAOverlay>> *hollowShapes;
@@ -24,9 +21,6 @@
 
 ///半径，单位：米 负数按照0处理
 @property (nonatomic, assign) CLLocationDistance radius;
-
-///该圆的外接map rect
-@property (nonatomic, readonly) MAMapRect boundingMapRect;
 
 /**
  * @brief 根据中心点和半径生成圆

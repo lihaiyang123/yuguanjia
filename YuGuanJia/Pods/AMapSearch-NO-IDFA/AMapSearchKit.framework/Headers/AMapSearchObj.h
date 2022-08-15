@@ -61,6 +61,27 @@ typedef NS_ENUM(NSInteger, AMapDrivingRouteExcludeType)
     AMapDrivingRouteExcludeTypeFerry      = 3, ///< 渡船
 };
 
+///规避道路类型 @since 9.2.0
+typedef NS_ENUM(NSUInteger, AMapDrivingRouteShowFieldType)
+{
+    AMapDrivingRouteShowFieldTypeNone     = 1 << 0, ///< 不返回扩展信息
+    AMapDrivingRouteShowFieldTypeCost     = 1 << 1, ///< 返回方案所需时间及费用成本
+    AMapDrivingRouteShowFieldTypeTmcs     = 1 << 2, ///< 返回分段路况详情
+    AMapDrivingRouteShowFieldTypeNavi     = 1 << 3, ///< 返回详细导航动作指令
+    AMapDrivingRouteShowFieldTypeCities   = 1 << 4, ///< 返回分段途径城市信息
+    AMapDrivingRouteShowFieldTypePolyline = 1 << 5, ///< 返回分路段坐标点串，两点间用“,”分隔
+    AMapDrivingRouteShowFieldTypeNewEnergy = 1 << 6, ///< 返回分路段坐标点串，两点间用“,”分隔
+    AMapDrivingRouteShowFieldTypeAll      = ~0UL,   ///< 返回所有扩展信息
+};
+
+///距离测量类型 @since 7.7.0
+typedef NS_ENUM(NSInteger, AMapDistanceSearchType)
+{
+    AMapDistanceSearchTypeStraight        = 0, ///< 直线距离
+    AMapDistanceSearchTypeDrive           = 1, ///< 驾车导航距离
+    AMapDistanceSearchTypeWalk            = 3, ///< 步行导航距离
+};
+
 #pragma mark - AMapPOISearchBaseRequest
 
 ///POI搜索请求基类
@@ -69,7 +90,7 @@ typedef NS_ENUM(NSInteger, AMapDrivingRouteExcludeType)
 @property (nonatomic, copy)   NSString  *types;
 ///排序规则, 0-距离排序；1-综合排序, 默认0
 @property (nonatomic, assign) NSInteger  sortrule;
-///每页记录数, 范围1-50, [default = 20]
+///每页记录数, 范围1-25, [default = 20]
 @property (nonatomic, assign) NSInteger  offset;
 ///当前页数, 范围1-100, [default = 1]
 @property (nonatomic, assign) NSInteger  page;
@@ -106,7 +127,7 @@ typedef NS_ENUM(NSInteger, AMapDrivingRouteExcludeType)
 @property (nonatomic, copy)   NSString     *keywords; 
 ///中心点坐标
 @property (nonatomic, copy)   AMapGeoPoint *location; 
-///查询半径，范围：0-50000，单位：米 [default = 3000]
+///查询半径，范围：0-50000，单位：米 [default = 1500]
 @property (nonatomic, assign) NSInteger     radius;
 ///查询城市，可选值：cityname（中文或中文全拼）、citycode、adcode。注：当用户指定的经纬度和city出现冲突，若范围内有用户指定city的数据，则返回相关数据，否则返回为空。（since 5.7.0）
 @property (nonatomic, copy)   NSString     *city;
@@ -327,6 +348,58 @@ typedef NS_ENUM(NSInteger, AMapDrivingRouteExcludeType)
 
 #pragma mark - AMapDrivingRouteSearchRequest
 
+///驾车路径规划2.0
+@interface AMapDrivingCalRouteSearchRequest : AMapRouteSearchBaseRequest
+/**
+ 驾车导航策略，默认策略为32。
+    32：默认，高德推荐，同高德地图APP默认
+    33：躲避拥堵
+    34：高速优先
+    35：不走高速
+    36：少收费
+    37：大路优先
+    38：速度最快
+    39：躲避拥堵＋高速优先
+    40：躲避拥堵＋不走高速
+    41：躲避拥堵＋少收费
+    42：少收费＋不走高速
+    43：躲避拥堵＋少收费＋不走高速
+    44：躲避拥堵＋大路优先
+    45：躲避拥堵＋速度最快
+ */
+@property (nonatomic, assign) NSInteger strategy;
+///途经点 AMapGeoPoint 数组，目前最多支持6个途经点
+@property (nonatomic, copy) NSArray<AMapGeoPoint *> *waypoints;
+///避让区域 AMapGeoPolygon 数组，目前最多支持100个避让区域，每个区域16个点
+@property (nonatomic, copy) NSArray<AMapGeoPolygon *> *avoidpolygons;
+///避让道路名
+@property (nonatomic, copy) NSString *avoidroad;
+///出发点 POI ID
+@property (nonatomic, copy) NSString *originId;
+///目的地 POI ID
+@property (nonatomic, copy) NSString *destinationId;
+///出发点POI类型编码，此值可以辅助更精准的起点算路，0：普通道路、1：高架上、2：高架下、3：主路、4：辅路、5：隧道、7：环岛、9：停车场内部
+@property (nonatomic, copy) NSString *origintype;
+///目的地POI类型编码
+@property (nonatomic, copy) NSString *destinationtype;
+///车牌信息，如京AHA322，支持6位传统车牌和7位新能源车牌，用于判断是否限行
+@property (nonatomic, copy) NSString *plate;
+///使用轮渡,0使用1不使用,默认为0使用
+@property (nonatomic, assign) NSInteger ferry;
+/**
+ 驾车路径规划车辆类型，默认策略为0。
+ 0：普通汽车(默认值);
+ 1：纯电动车;
+ 2：插电混动车
+ */
+@property (nonatomic, assign) NSInteger cartype;
+///设置需要返回的扩展信息，默认为AMapDrivingRouteShowFieldTypeNone，只返回基础信息字段
+@property (nonatomic, assign) AMapDrivingRouteShowFieldType showFieldType;
+
+@end
+
+#pragma mark - AMapDrivingRouteSearchRequest
+
 ///驾车路径规划
 @interface AMapDrivingRouteSearchRequest : AMapRouteSearchBaseRequest
 
@@ -348,9 +421,9 @@ typedef NS_ENUM(NSInteger, AMapDrivingRouteExcludeType)
     20，多备选，高速优先，躲避拥堵（考虑路况）
  */
 @property (nonatomic, assign) NSInteger strategy;
-///途经点 AMapGeoPoint 数组，最多支持16个途经点
+///途经点 AMapGeoPoint 数组，目前最多支持6个途经点
 @property (nonatomic, copy) NSArray<AMapGeoPoint *> *waypoints;
-///避让区域 AMapGeoPolygon 数组，最多支持100个避让区域，每个区域16个点
+///避让区域 AMapGeoPolygon 数组，目前最多支持100个避让区域，每个区域16个点
 @property (nonatomic, copy) NSArray<AMapGeoPolygon *> *avoidpolygons;
 ///避让道路名
 @property (nonatomic, copy) NSString *avoidroad;
@@ -484,8 +557,10 @@ typedef NS_ENUM(NSInteger, AMapDrivingRouteExcludeType)
 @property (nonatomic, strong) NSArray<AMapGeoPoint *> *origins;
 ///终点坐标
 @property (nonatomic, strong) AMapGeoPoint *destination;
-///路径计算的方式和方法.0：直线距离; 1：驾车导航距离（仅支持国内坐标）此时会考虑路况，故在不同时间请求返回结果可能不同，此策略和driving接口的 strategy=4策略一致; 默认为1
-@property (nonatomic, assign) NSInteger type;
+///路径计算的类型，当type为导航距离时，会考虑路况，故在不同时间请求返回结果可能不同；
+@property (nonatomic, assign) AMapDistanceSearchType type;
+///驾车距离测量策略，参考驾车路径规划。仅当type为AMapDistanceSearchTypeDrive时有效，默认4
+@property (nonatomic, assign) NSInteger strategy;
 ///是否返回扩展信息，默认为 NO （since 7.6.0）
 @property (nonatomic, assign) BOOL requireExtension;
 @end
@@ -513,46 +588,6 @@ typedef NS_ENUM(NSInteger, AMapDrivingRouteExcludeType)
 @property (nonatomic, strong) NSArray<AMapLocalWeatherLive *> *lives; 
 ///预报天气数据信息 AMapLocalWeatherForecast 数组，仅在请求预报天气时有返回
 @property (nonatomic, strong) NSArray<AMapLocalWeatherForecast *> *forecasts; 
-
-@end
-
-#pragma mark - AMapRoadTrafficSearchRequest
-
-@interface AMapRoadTrafficSearchBaseRequest : AMapSearchObject
-
-///道路等级，1：高速（京藏高速）2：城市快速路、国道(西三环、103国道) 3：高速辅路（G6辅路）4：主要道路（长安街、三环辅路路）5：一般道路（彩和坊路）6：无名道路。默认为5. since 5.5.0
-@property (nonatomic, assign)   NSInteger level;
-
-///是否返回扩展信息，默认为 NO
-@property (nonatomic, assign) BOOL requireExtension;
-
-@end
-
-///道路实时路况查询请求 since 5.1.0
-@interface AMapRoadTrafficSearchRequest : AMapRoadTrafficSearchBaseRequest
-
-///道路名称，可通过逆地理编码查询获取
-@property (nonatomic, copy)   NSString *roadName;
-
-///城市adcode，可参考 http://a.amap.com/lbs/static/zip/AMap_adcode_citycode.zip
-@property (nonatomic, copy)   NSString *adcode;
-
-@end
-
-///圆形区域道路实时路况查询请求 since 5.5.0  注意:返回路况结果取决于发起请求时刻的实时路况，不保证范围内的所有路线路况都会返回，也不保证返回的路况长度一定在限制半径内
-@interface AMapRoadTrafficCircleSearchRequest : AMapRoadTrafficSearchBaseRequest
-
-///必填，中心点坐标。
-@property (nonatomic, copy) AMapGeoPoint *location;
-///查询半径,单位：米。[0, 5000], 默认值为1000.
-@property (nonatomic, assign) NSInteger radius;
-
-@end
-
-///道路实时路况查询返回 since 5.1.0
-@interface AMapRoadTrafficSearchResponse : AMapSearchObject
-///路况信息
-@property (nonatomic, strong) AMapTrafficInfo *trafficInfo;
 
 @end
 

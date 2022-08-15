@@ -13,7 +13,7 @@
 ///支持动画效果的点标注
 @interface MAAnimatedAnnotation : MAPointAnnotation<MAAnimatableAnnotation>
 
-///移动方向. since 4.5.0
+///移动方向. 正北为0度，顺时针方向。即正东90，正南180，正西270。since 4.5.0
 @property (nonatomic, assign) CLLocationDirection movingDirection;
 
 /**

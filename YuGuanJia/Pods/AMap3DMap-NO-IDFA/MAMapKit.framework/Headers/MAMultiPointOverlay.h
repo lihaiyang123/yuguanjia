@@ -33,7 +33,7 @@
 ///海量点overlay（since 5.1.0）
 @interface MAMultiPointOverlay : MAShape<MAOverlay>
 
-///点对象集合
+///点对象集合（注意：MAMultiPointItem属性不支持动态更新）
 @property (nonatomic, readonly) NSArray<MAMultiPointItem *> *items;
 
 ///初始化方法

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AMapSearchObj.h"
 #import "AMapCommonObj.h"
+#import <AMapFoundationKit/AMapServices.h>
 
 @protocol AMapSearchDelegate;
 
@@ -39,6 +40,20 @@
  * @brief 取消所有未回调的请求，触发错误回调。
  */
 - (void)cancelAllRequests;
+
+#pragma mark - Privacy 隐私合规
+/**
+ * @brief 更新App是否显示隐私弹窗的状态，隐私弹窗是否包含高德SDK隐私协议内容的状态. since 8.1.0
+ * @param showStatus 隐私弹窗状态
+ * @param containStatus 包含高德SDK隐私协议状态
+ */
++ (void)updatePrivacyShow:(AMapPrivacyShowStatus)showStatus privacyInfo:(AMapPrivacyInfoStatus)containStatus;
+/**
+* @brief 更新用户授权高德SDK隐私协议状态. since 8.1.0
+* @param agreeStatus 用户授权高德SDK隐私协议状态
+*/
++ (void)updatePrivacyAgree:(AMapPrivacyAgreeStatus)agreeStatus;
+
 
 #pragma mark - 搜索服务接口
 
@@ -118,7 +133,13 @@
  * @brief 驾车路径规划查询接口
  * @param request 查询选项。具体属性字段请参考 AMapDrivingRouteSearchRequest 类。
  */
-- (void)AMapDrivingRouteSearch:(AMapDrivingRouteSearchRequest *)request;
+- (void)AMapDrivingRouteSearch:(AMapDrivingRouteSearchRequest *)request __attribute__((deprecated("已废弃, from 9.2.0，该功能不再维护，请升级算路V2.0接口 AMapDrivingV2RouteSearch")));
+
+/**
+ * @brief 驾车路径规划V2.0查询接口
+ * @param request 查询选项。具体属性字段请参考 AMapDrivingCalRouteSearchRequest 类。
+ */
+- (void)AMapDrivingV2RouteSearch:(AMapDrivingCalRouteSearchRequest *)request;
 
 /**
  * @brief 步行路径规划查询接口
@@ -155,18 +176,6 @@
  * @param request 查询选项。具体属性字段请参考 AMapWeatherSearchRequest 类。
  */
 - (void)AMapWeatherSearch:(AMapWeatherSearchRequest *)request;
-
-/**
- * @brief 查询指定道路的实时路况 since 5.1.0
- * @param request 查询选项。具体属性字段请参考 AMapRoadTrafficSearchRequest 类。
- */
-- (void)AMapRoadTrafficSearch:(AMapRoadTrafficSearchRequest *)request;
-
-/**
- * @brief 查询圆形区域内道路的实时路况 since 5.5.0
- * @param request 查询选项。具体属性字段请参考 AMapRoadTrafficSearchRequest 类。
- */
-- (void)AMapRoadTrafficCircleSearch:(AMapRoadTrafficCircleSearchRequest *)request;
 
 /**
  * @brief 距离查询（since 6.1.0）
@@ -333,13 +342,6 @@
  */
 - (void)onWeatherSearchDone:(AMapWeatherSearchRequest *)request response:(AMapWeatherSearchResponse *)response;
 
-
-/**
- * @brief 道路路况查询回调 since 5.1.0
- * @param request  发起的请求，具体字段参考 AMapRoadTrafficSearchBaseRequest 及其子类 。
- * @param response 响应结果，具体字段参考 AMapRoadTrafficSearchResponse 。
- */
-- (void)onRoadTrafficSearchDone:(AMapRoadTrafficSearchBaseRequest *)request response:(AMapRoadTrafficSearchResponse *)response;
 #pragma mark - 附近搜索回调
 
 /**

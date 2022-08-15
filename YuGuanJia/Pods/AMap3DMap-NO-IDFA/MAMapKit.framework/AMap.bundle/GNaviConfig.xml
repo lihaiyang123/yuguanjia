@@ -3,7 +3,7 @@
 	<dirs>
 		<data>./data/</data>
 		<diff>./diff/</diff>
-		<res>./res/</res>
+		<res>./res900/</res>
 		<log>./log/</log>
 	</dirs>
 </config>

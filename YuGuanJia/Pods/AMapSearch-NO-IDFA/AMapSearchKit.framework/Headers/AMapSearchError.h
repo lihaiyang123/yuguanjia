@@ -12,6 +12,7 @@
 ///AMapSearch errorDomain
 extern NSString * const AMapSearchErrorDomain;
 
+///注意：增加errorCode时，需增加code对应详细说明信息errorInfoWithCode
 ///AMapSearch errorCode
 typedef NS_ENUM(NSInteger, AMapSearchErrorCode)
 {
@@ -52,6 +53,7 @@ typedef NS_ENUM(NSInteger, AMapSearchErrorCode)
     AMapSearchErrorOverPassAreaMaxCount   = 1810,///< 避让区域个数超限
     AMapSearchErrorOverPassAreaMaxArea    = 1811,///< 避让区域大小超限
     AMapSearchErrorOverPassAreaPointCount = 1812,///< 避让区域点个数超限
+    AMapSearchErrorOverPassKeyWordLenth   = 1813,///< 搜索关键字长度超限
 
     AMapSearchErrorTableIDNotExist        = 2000,///< table id 格式不正确
     AMapSearchErrorIDNotExist             = 2001,///< id 不存在
@@ -69,4 +71,10 @@ typedef NS_ENUM(NSInteger, AMapSearchErrorCode)
     AMapSearchErrorShareFailed            = 4001,///< 短串请求失败
 };
 
+@interface AMapSearchError : NSObject
+
+///错误码所对应详细信息
++ (NSString *)errorInfoWithCode:(AMapSearchErrorCode)errorCode;
+
+@end
 #endif

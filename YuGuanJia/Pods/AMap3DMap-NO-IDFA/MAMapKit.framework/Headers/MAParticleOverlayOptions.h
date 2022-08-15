@@ -143,10 +143,10 @@ typedef NS_ENUM(NSInteger, MAParticleOverlayType)
 
 @end
 
-#pragma mark - MAParticleEmissionModule
+#pragma mark - MAParticleEmissionModuleOC
 
 ///粒子的发射率类，每隔多少时间发射粒子数量，越多会越密集. since 6.5.0
-@interface MAParticleEmissionModule : NSObject
+@interface MAParticleEmissionModuleOC : NSObject
 
 /**
  * @brief 根据发射数量和发射间隔生成粒子的发射率类。关系为:"发射数量为rate粒子->等待rateTime间隔->发射数量为rate粒子->等待rateTime间隔"循环
@@ -206,10 +206,10 @@ typedef NS_ENUM(NSInteger, MAParticleOverlayType)
 
 @end
 
-#pragma mark - MAParticleOverLifeModule
+#pragma mark - MAParticleOverLifeModuleOC
 
 ///粒子生命周期过程中状态变化，包含速度、旋转和颜色的变化. since 6.5.0
-@interface MAParticleOverLifeModule : NSObject
+@interface MAParticleOverLifeModuleOC : NSObject
 
 /**
  * @brief 设置粒子生命周期过程中速度的变化
@@ -269,14 +269,14 @@ typedef NS_ENUM(NSInteger, MAParticleOverlayType)
 ///每个粒子的初始速度. (默认nil)
 @property (nonatomic, strong) id<MAParticleVelocityGenerate> particleStartSpeed;
 
-///粒子的发射率,参考 MAParticleEmissionModule 类. (默认nil)
-@property (nonatomic, strong) MAParticleEmissionModule *particleEmissionModule;
+///粒子的发射率,参考 MAParticleEmissionModuleOC 类. (默认nil)
+@property (nonatomic, strong) MAParticleEmissionModuleOC *particleEmissionModule;
 
 ///粒子的发射区域模型. (默认nil)
 @property (nonatomic, strong) id<MAParticleShapeModule> particleShapeModule;
 
-///粒子生命周期过程,参考 MAParticleOverLifeModule 类. (默认nil)
-@property (nonatomic, strong) MAParticleOverLifeModule *particleOverLifeModule;
+///粒子生命周期过程,参考 MAParticleOverLifeModuleOC 类. (默认nil)
+@property (nonatomic, strong) MAParticleOverLifeModuleOC *particleOverLifeModule;
 
 @end
 

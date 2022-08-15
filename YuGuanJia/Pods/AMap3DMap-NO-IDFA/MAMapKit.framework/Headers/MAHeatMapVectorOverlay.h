@@ -80,7 +80,7 @@ typedef NS_ENUM(NSInteger, MAHeatMapType)
 @property (nonatomic, strong) NSArray<NSNumber *> *startPoints;
 
 ///透明度，取值范围[0,1] ，default为1不透明
-@property (nonatomic, assign) CGFloat opacity;
+@property (nonatomic, assign) CGFloat opacity __attribute((deprecated("已废弃，since 7.9.0，请使用MAHeatMapVectorOverlayRender中的alpha")));;
 
 ///权重的最大值，default为0，表示不填，不填则取数组inputNodes中权重的最大值
 @property (nonatomic, assign) int maxIntensity;

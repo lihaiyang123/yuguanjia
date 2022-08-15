@@ -15,9 +15,9 @@
 @required
 
 ///返回区域中心坐标
-@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
+- (CLLocationCoordinate2D)coordinate;
 
 ///区域外接矩形
-@property (nonatomic, readonly) MAMapRect boundingMapRect;
+- (MAMapRect)boundingMapRect;
 
 @end

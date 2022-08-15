@@ -490,6 +490,8 @@
 @property (nonatomic, assign) NSInteger  tollDistance; 
 ///主要收费路段
 @property (nonatomic, copy)   NSString  *tollRoad;
+///此段交通信号灯个数 since 9.2.0 ( 只在算路2.0接口有效 )
+@property (nonatomic, assign) NSInteger totalTrafficLights;
 
 ///途径城市 AMapCity 数组，只有驾车路径规划时有效
 @property (nonatomic, strong) NSArray<AMapCity *> *cities;
