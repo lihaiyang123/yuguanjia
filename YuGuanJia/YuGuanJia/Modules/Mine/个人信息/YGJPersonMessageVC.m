@@ -201,6 +201,7 @@
     [alertVc addAction:cancelAction];
     [self presentViewController:alertVc animated:YES completion:nil];
 }
+
 //商户身份属性被点击
 - (IBAction)attributeAction:(id)sender {
     NSArray *titleArr = @[@"商品商户",@"仓储加工商户",@"物流商户",@"个体商户"];
