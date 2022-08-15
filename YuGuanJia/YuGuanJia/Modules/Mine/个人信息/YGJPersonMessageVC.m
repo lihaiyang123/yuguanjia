@@ -60,7 +60,6 @@
     [UDAAPIRequest requestUrl:@"/app/users/getUsersInfoByToken" parameter:nil requestType:UDARequestTypePost isShowHUD:YES progressBlock:^(CGFloat value) {
         
     } completeBlock:^(UDAResponseDataModel * _Nonnull requestModel) {
-        
         @strongify(self)
         if (requestModel.success) {
             self.model = [YGJPersonMessageModel mj_objectWithKeyValues:requestModel.result];
