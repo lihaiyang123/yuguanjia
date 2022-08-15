@@ -73,7 +73,6 @@
     [YGJToast showToast:@"提交成功"];
 }
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"个人信息";
